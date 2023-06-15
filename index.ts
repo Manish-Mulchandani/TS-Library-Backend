@@ -2,9 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import {connectDB} from './config/db';
-import authRoute from './routes/authRoute';
-import bookRoute from './routes/bookRoute';
-import userRoute from './routes/userRoute';
+import {authRoute} from './routes/authRoute';
+import {bookRoute} from './routes/bookRoute';
+import {userRoute} from './routes/userRoute';
 import { rateLimitMiddleware } from './middlewares/rateLimitMiddleware';
 
 dotenv.config();

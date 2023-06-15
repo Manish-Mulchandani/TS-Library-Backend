@@ -1,6 +1,6 @@
 import {Request, Response} from "express"
 import { comparePassword, hashPassword } from "../helpers/authHelper"
-import UserModel from "../models/userModel"
+import userModel from "../models/userModel"
 import JWT from "jsonwebtoken"
 
 export const registerController = async (req:Request,res:Response) => {
@@ -19,7 +19,7 @@ export const registerController = async (req:Request,res:Response) => {
         }
 
         //check if user is existing
-        const existingUser = await UserModel.findOne({email})
+        const existingUser = await userModel.findOne({email})
         if(existingUser){
             return res.status(200).send({
                 success: true,
@@ -29,7 +29,7 @@ export const registerController = async (req:Request,res:Response) => {
 
         //register user
         const hashedPassword = await hashPassword(password)
-        const user = await new UserModel({name,email,password:hashedPassword}).save()
+        const user = await new userModel({name,email,password:hashedPassword}).save()
         res.status(200).send({
             success:true,
             message: "User registered successfully",
@@ -59,7 +59,7 @@ export const loginController = async (req:Request,res:Response) => {
         }
 
         // check user
-        const user = await UserModel.findOne({email})
+        const user = await userModel.findOne({email})
         if(!user) {
             return res.status(400).send({
                 success: false,
@@ -98,13 +98,3 @@ export const loginController = async (req:Request,res:Response) => {
         })
     }
 }
-
-// test controller
-/*export const testController = (req,res) => {
-    try {
-        res.send("Protected Route"); 
-    } catch (error) {
-        console.log(error)
-        res.send({error})
-    }
-}*/
